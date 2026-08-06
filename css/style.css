@@ -1,0 +1,385 @@
+:root {
+  --background: #f6f5f2;
+  --surface: #ffffff;
+  --surface-soft: #faf9f6;
+  --text: #0f2747;
+  --muted: #687385;
+  --primary: #0f2747;
+  --primary-dark: #091a31;
+  --primary-soft: #dce3eb;
+  --border: rgba(15, 39, 71, 0.12);
+  --danger: #c2413b;
+  --shadow: 0 16px 40px rgba(15, 39, 71, 0.09);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: var(--background);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: 1.35rem;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  background: #f6f5f2;
+}
+
+.login-card {
+  width: min(100%, 420px);
+  padding: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.login-card > .muted {
+  margin-bottom: 26px;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  color: var(--text);
+  background: var(--surface-soft);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+input:focus {
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(15, 39, 71, 0.14);
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:focus-visible {
+  outline: 3px solid rgba(15, 39, 71, 0.24);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+#login-button {
+  width: 100%;
+  margin-top: 26px;
+  padding: 13px 18px;
+  color: #ffffff;
+  background: var(--primary);
+}
+
+#login-button:hover {
+  background: var(--primary-dark);
+}
+
+.error-message {
+  margin: 16px 0 0;
+  color: var(--danger);
+  font-size: 0.86rem;
+}
+
+.error-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  background: var(--background);
+}
+
+.error-card {
+  width: min(100%, 520px);
+  padding: 42px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.error-code {
+  margin-bottom: 24px;
+  color: var(--primary-soft);
+  font-size: clamp(5rem, 18vw, 9rem);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+}
+
+.error-card .muted {
+  max-width: 420px;
+  margin-bottom: 28px;
+}
+
+.home-link {
+  display: inline-block;
+  padding: 13px 18px;
+  border-radius: 10px;
+  color: #ffffff;
+  background: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.home-link:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.home-link:focus-visible {
+  outline: 3px solid rgba(15, 39, 71, 0.24);
+  outline-offset: 2px;
+}
+
+.profile-page {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 48px 0 64px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.profile-header h1 {
+  margin-bottom: 8px;
+}
+
+.profile-header .muted {
+  margin-bottom: 0;
+}
+
+.secondary-button {
+  padding: 11px 18px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--surface);
+}
+
+.secondary-button:hover {
+  border-color: rgba(15, 39, 71, 0.3);
+  color: var(--primary);
+  background: #eef1f4;
+}
+
+.status-message {
+  min-height: 24px;
+  color: var(--muted);
+}
+
+.summary-grid,
+.graphs-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.summary-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 20px;
+}
+
+.summary-card,
+.graph-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 6px 18px rgba(15, 39, 71, 0.05);
+}
+
+.summary-card {
+  padding: 24px;
+}
+
+.summary-card p {
+  margin-bottom: 10px;
+  color: var(--muted);
+}
+
+.summary-card strong {
+  font-size: 2rem;
+}
+
+.graphs-grid {
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+}
+
+.graph-card {
+  min-width: 0;
+  padding: 24px;
+}
+
+.graph-card svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+  overflow: visible;
+}
+
+.chart-axis {
+  stroke: #c8ced6;
+  stroke-width: 1;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--primary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.chart-area {
+  fill: rgba(15, 39, 71, 0.1);
+}
+
+.chart-point {
+  fill: var(--surface);
+  stroke: var(--primary);
+  stroke-width: 2;
+}
+
+.chart-label {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.chart-value {
+  fill: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+#audit-chart circle[stroke="#21a179"] {
+  stroke: var(--primary) !important;
+}
+
+#audit-chart circle[fill="#21a179"] {
+  fill: var(--primary) !important;
+}
+
+#audit-chart circle[stroke="#e7ebf2"] {
+  stroke: var(--primary-soft) !important;
+}
+
+#audit-chart circle[fill="#dfe5ee"] {
+  fill: #cbd4df !important;
+}
+
+@media (max-width: 800px) {
+  .summary-grid,
+  .graphs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-page {
+    width: min(100% - 28px, 620px);
+    padding-top: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 22px;
+    border-radius: 14px;
+  }
+
+  .error-card {
+    padding: 30px 24px;
+    border-radius: 14px;
+  }
+
+  .profile-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
