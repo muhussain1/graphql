@@ -1,17 +1,17 @@
 :root {
-  --background: #f6f5f2;
+  --background: #f7f7fb;
   --surface: #ffffff;
-  --surface-soft: #faf9f6;
-  --text: #0f2747;
-  --muted: #687385;
-  --primary: #0f2747;
-  --primary-dark: #091a31;
-  --primary-soft: #dce3eb;
-  --border: rgba(15, 39, 71, 0.12);
-  --danger: #c2413b;
-  --success: #2f8f5b;
-  --shadow: 0 16px 40px rgba(15, 39, 71, 0.09);
-  --shadow-hover: 0 20px 48px rgba(15, 39, 71, 0.13);
+  --surface-soft: #fbfbfe;
+  --text: #1b1b2f;
+  --muted: #6b6d85;
+  --primary: #6753e8;
+  --primary-dark: #5540d1;
+  --primary-soft: #ece9fb;
+  --border: rgba(103, 83, 232, 0.12);
+  --danger: #d1453d;
+  --success: #1f9d6e;
+  --shadow: 0 16px 40px rgba(103, 83, 232, 0.09);
+  --shadow-hover: 0 20px 48px rgba(103, 83, 232, 0.13);
   --radius-lg: 18px;
   --radius-md: 14px;
   --radius-sm: 10px;
@@ -30,7 +30,7 @@ body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at 85% 0%, rgba(15, 39, 71, 0.06), transparent 32rem),
+    radial-gradient(circle at 85% 0%, rgba(103, 83, 232, 0.06), transparent 32rem),
     var(--background);
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -89,7 +89,7 @@ h2 {
   place-items: center;
   padding: 24px;
   background:
-    radial-gradient(circle at 15% 100%, rgba(15, 39, 71, 0.05), transparent 28rem),
+    radial-gradient(circle at 15% 100%, rgba(103, 83, 232, 0.05), transparent 28rem),
     var(--background);
 }
 
@@ -131,13 +131,13 @@ input::placeholder {
 }
 
 input:hover {
-  border-color: rgba(15, 39, 71, 0.22);
+  border-color: rgba(103, 83, 232, 0.22);
 }
 
 input:focus {
   border-color: var(--primary);
   background: var(--surface);
-  box-shadow: 0 0 0 3px rgba(15, 39, 71, 0.14);
+  box-shadow: 0 0 0 3px rgba(103, 83, 232, 0.14);
 }
 
 button {
@@ -156,7 +156,7 @@ button:active {
 }
 
 button:focus-visible {
-  outline: 3px solid rgba(15, 39, 71, 0.24);
+  outline: 3px solid rgba(103, 83, 232, 0.24);
   outline-offset: 2px;
 }
 
@@ -172,12 +172,12 @@ button:disabled {
   padding: 13px 18px;
   color: #ffffff;
   background: var(--primary);
-  box-shadow: 0 8px 20px rgba(15, 39, 71, 0.18);
+  box-shadow: 0 8px 20px rgba(103, 83, 232, 0.18);
 }
 
 #login-button:hover {
   background: var(--primary-dark);
-  box-shadow: 0 10px 24px rgba(15, 39, 71, 0.24);
+  box-shadow: 0 10px 24px rgba(103, 83, 232, 0.24);
 }
 
 .error-message {
@@ -231,18 +231,18 @@ button:disabled {
   background: var(--primary);
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 8px 20px rgba(15, 39, 71, 0.18);
+  box-shadow: 0 8px 20px rgba(103, 83, 232, 0.18);
   transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .home-link:hover {
   background: var(--primary-dark);
-  box-shadow: 0 10px 24px rgba(15, 39, 71, 0.24);
+  box-shadow: 0 10px 24px rgba(103, 83, 232, 0.24);
   transform: translateY(-1px);
 }
 
 .home-link:focus-visible {
-  outline: 3px solid rgba(15, 39, 71, 0.24);
+  outline: 3px solid rgba(103, 83, 232, 0.24);
   outline-offset: 2px;
 }
 
@@ -280,7 +280,7 @@ button:disabled {
 }
 
 .secondary-button:hover {
-  border-color: rgba(15, 39, 71, 0.3);
+  border-color: rgba(103, 83, 232, 0.3);
   color: var(--primary);
   background: #eef1f4;
 }
@@ -306,7 +306,7 @@ button:disabled {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   background: var(--surface);
-  box-shadow: 0 8px 24px rgba(15, 39, 71, 0.04);
+  box-shadow: 0 8px 24px rgba(103, 83, 232, 0.04);
   transition: box-shadow 220ms ease, transform 220ms ease;
 }
 
@@ -373,7 +373,7 @@ button:disabled {
 }
 
 .chart-grid-line {
-  stroke: rgba(15, 39, 71, 0.11);
+  stroke: rgba(103, 83, 232, 0.11);
   stroke-dasharray: 3 7;
   stroke-width: 1;
 }
@@ -401,7 +401,7 @@ button:disabled {
 }
 
 .chart-guide {
-  stroke: rgba(15, 39, 71, 0.2);
+  stroke: rgba(103, 83, 232, 0.2);
   stroke-dasharray: 2 5;
   stroke-width: 1;
 }
@@ -419,7 +419,7 @@ button:disabled {
 
 .chart-point-halo {
   fill: var(--surface);
-  stroke: rgba(15, 39, 71, 0.16);
+  stroke: rgba(103, 83, 232, 0.16);
   stroke-width: 1;
 }
 
@@ -446,7 +446,7 @@ button:disabled {
 }
 
 .audit-bar-track {
-  fill: #e8ebee;
+  fill: #ecebf5;
 }
 
 .audit-bar-given {
@@ -454,7 +454,7 @@ button:disabled {
 }
 
 .audit-bar-received {
-  fill: #9ca9b7;
+  fill: #a6a3c4;
 }
 
 @keyframes rise {
