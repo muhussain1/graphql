@@ -20,6 +20,21 @@ function shortXP(value) {
   return `${Math.round(value)} B`;
 }
 
+function niceMaximum(value) {
+  if (value <= 0) return 1;
+
+  const magnitude = 10 ** Math.floor(Math.log10(value));
+  const step = magnitude / 2;
+  return Math.ceil(value / step) * step;
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString(undefined, {
+    month: "short",
+    year: "numeric",
+  });
+}
+
 export function drawXpOverTime(svg, transactions) {
   svg.replaceChildren();
 
@@ -32,13 +47,19 @@ export function drawXpOverTime(svg, transactions) {
   svg.append(title, description);
 
   if (!transactions.length) {
-    svg.append(createSvgElement("text", { x: 380, y: 150, "text-anchor": "middle", class: "chart-label" }, "No XP data yet"));
+    svg.append(
+      createSvgElement(
+        "text",
+        { x: 380, y: 150, "text-anchor": "middle", class: "chart-label" },
+        "No XP data yet"
+      )
+    );
     return;
   }
 
   const width = 760;
   const height = 300;
-  const padding = { top: 24, right: 24, bottom: 42, left: 64 };
+  const padding = { top: 24, right: 28, bottom: 42, left: 70 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
   let runningTotal = 0;
@@ -46,50 +67,94 @@ export function drawXpOverTime(svg, transactions) {
     runningTotal += Number(transaction.amount) || 0;
     return { total: runningTotal, date: new Date(transaction.createdAt) };
   });
-  const maximum = Math.max(runningTotal, 1);
+  const maximum = niceMaximum(runningTotal);
+  const firstTime = points[0].date.getTime();
+  const lastTime = points.at(-1).date.getTime();
+  const timeRange = Math.max(lastTime - firstTime, 1);
 
-  const coordinates = points.map((point, index) => {
+  const coordinates = points.map((point) => {
     const x = points.length === 1
-      ? padding.left + chartWidth / 2
-      : padding.left + (index / (points.length - 1)) * chartWidth;
+      ? padding.left + chartWidth
+      : padding.left + ((point.date.getTime() - firstTime) / timeRange) * chartWidth;
     const y = padding.top + chartHeight - (point.total / maximum) * chartHeight;
     return { x, y };
   });
 
-  svg.append(
-    createSvgElement("line", {
-      x1: padding.left,
-      y1: padding.top + chartHeight,
-      x2: width - padding.right,
-      y2: padding.top + chartHeight,
-      class: "chart-axis",
-    }),
-    createSvgElement("line", {
-      x1: padding.left,
-      y1: padding.top,
-      x2: padding.left,
-      y2: padding.top + chartHeight,
-      class: "chart-axis",
-    })
+  const gradient = createSvgElement("linearGradient", {
+    id: "xp-area-gradient",
+    x1: "0",
+    y1: "0",
+    x2: "0",
+    y2: "1",
+  });
+  gradient.append(
+    createSvgElement("stop", { offset: "0%", class: "chart-gradient-start" }),
+    createSvgElement("stop", { offset: "100%", class: "chart-gradient-end" })
   );
+  const defs = createSvgElement("defs");
+  defs.append(gradient);
+  svg.append(defs);
 
-  const linePoints = coordinates.map(({ x, y }) => `${x},${y}`).join(" ");
-  const areaPoints = `${padding.left},${padding.top + chartHeight} ${linePoints} ${width - padding.right},${padding.top + chartHeight}`;
-  svg.append(
-    createSvgElement("polygon", { points: areaPoints, class: "chart-area" }),
-    createSvgElement("polyline", { points: linePoints, class: "chart-line" })
-  );
-
-  coordinates.forEach(({ x, y }) => {
-    svg.append(createSvgElement("circle", { cx: x, cy: y, r: 4, class: "chart-point" }));
+  [0, 0.5, 1].forEach((fraction) => {
+    const y = padding.top + chartHeight - chartHeight * fraction;
+    svg.append(
+      createSvgElement("line", {
+        x1: padding.left,
+        y1: y,
+        x2: width - padding.right,
+        y2: y,
+        class: "chart-grid-line",
+      }),
+      createSvgElement(
+        "text",
+        {
+          x: padding.left - 12,
+          y: y + 4,
+          "text-anchor": "end",
+          class: "chart-label",
+        },
+        shortXP(maximum * fraction)
+      )
+    );
   });
 
-  const firstDate = points[0].date.toLocaleDateString(undefined, { month: "short", year: "numeric" });
-  const lastDate = points.at(-1).date.toLocaleDateString(undefined, { month: "short", year: "numeric" });
+  const linePath = coordinates
+    .map(({ x, y }, index) => `${index === 0 ? "M" : "L"} ${x} ${y}`)
+    .join(" ");
+  const baseline = padding.top + chartHeight;
+  const areaPath = `${linePath} L ${coordinates.at(-1).x} ${baseline} L ${coordinates[0].x} ${baseline} Z`;
   svg.append(
-    createSvgElement("text", { x: padding.left, y: height - 12, class: "chart-label" }, firstDate),
-    createSvgElement("text", { x: width - padding.right, y: height - 12, "text-anchor": "end", class: "chart-label" }, lastDate),
-    createSvgElement("text", { x: padding.left - 10, y: padding.top + 5, "text-anchor": "end", class: "chart-label" }, shortXP(maximum)),
-    createSvgElement("text", { x: padding.left - 10, y: padding.top + chartHeight, "text-anchor": "end", class: "chart-label" }, "0")
+    createSvgElement("path", { d: areaPath, class: "chart-area" }),
+    createSvgElement("path", { d: linePath, class: "chart-line" })
   );
+
+  const latest = coordinates.at(-1);
+  svg.append(
+    createSvgElement("line", {
+      x1: latest.x,
+      y1: latest.y,
+      x2: latest.x,
+      y2: baseline,
+      class: "chart-guide",
+    }),
+    createSvgElement("circle", { cx: latest.x, cy: latest.y, r: 8, class: "chart-point-halo" }),
+    createSvgElement("circle", { cx: latest.x, cy: latest.y, r: 4, class: "chart-point" })
+  );
+
+  const middleDate = new Date(firstTime + timeRange / 2);
+  const dateLabels = [
+    { date: points[0].date, x: padding.left, anchor: "start" },
+    { date: middleDate, x: padding.left + chartWidth / 2, anchor: "middle" },
+    { date: points.at(-1).date, x: width - padding.right, anchor: "end" },
+  ];
+
+  dateLabels.forEach(({ date, x, anchor }) => {
+    svg.append(
+      createSvgElement(
+        "text",
+        { x, y: height - 12, "text-anchor": anchor, class: "chart-label chart-date" },
+        formatDate(date)
+      )
+    );
+  });
 }

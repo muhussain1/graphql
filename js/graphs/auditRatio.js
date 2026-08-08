@@ -25,50 +25,38 @@ export function drawAuditRatio(svg, up, down) {
 
   const total = up + down;
   const ratio = down > 0 ? up / down : 0;
-  const radius = 82;
-  const circumference = 2 * Math.PI * radius;
-  const upShare = total > 0 ? up / total : 0;
+  const maximum = Math.max(up, down, 1);
 
   svg.append(
     createSvgElement("title", { id: "audit-chart-title" }, "Audit contribution ratio"),
     createSvgElement(
       "desc",
       { id: "audit-chart-description" },
-      `A donut chart comparing ${formatAmount(up)} given to ${formatAmount(down)} received.`
+      `Two bars comparing ${formatAmount(up)} given to ${formatAmount(down)} received.`
     )
   );
 
-  const centerX = 210;
-  const centerY = 130;
-  const baseCircle = createSvgElement("circle", {
-    cx: centerX,
-    cy: centerY,
-    r: radius,
-    fill: "none",
-    stroke: "#e7ebf2",
-    "stroke-width": 24,
-  });
-  const upCircle = createSvgElement("circle", {
-    cx: centerX,
-    cy: centerY,
-    r: radius,
-    fill: "none",
-    stroke: "#21a179",
-    "stroke-width": 24,
-    "stroke-linecap": "round",
-    "stroke-dasharray": `${circumference * upShare} ${circumference}`,
-    transform: `rotate(-90 ${centerX} ${centerY})`,
-  });
-
-  svg.append(baseCircle);
-  if (total > 0) svg.append(upCircle);
-
   svg.append(
-    createSvgElement("text", { x: centerX, y: centerY - 2, "text-anchor": "middle", class: "chart-value" }, total ? ratio.toFixed(1) : "—"),
-    createSvgElement("text", { x: centerX, y: centerY + 22, "text-anchor": "middle", class: "chart-label" }, "ratio"),
-    createSvgElement("circle", { cx: 92, cy: 264, r: 6, fill: "#21a179" }),
-    createSvgElement("text", { x: 106, y: 268, class: "chart-label" }, `Given ${formatAmount(up)}`),
-    createSvgElement("circle", { cx: 250, cy: 264, r: 6, fill: "#dfe5ee" }),
-    createSvgElement("text", { x: 264, y: 268, class: "chart-label" }, `Received ${formatAmount(down)}`)
+    createSvgElement("text", { x: 36, y: 58, class: "audit-ratio-value" }, total ? ratio.toFixed(1) : "—"),
+    createSvgElement("text", { x: 36, y: 82, class: "chart-label" }, "current ratio")
   );
+
+  const bars = [
+    { label: "Given", amount: up, y: 132, className: "audit-bar-given" },
+    { label: "Received", amount: down, y: 214, className: "audit-bar-received" },
+  ];
+
+  bars.forEach(({ label, amount, y, className }) => {
+    const barWidth = total > 0 ? (amount / maximum) * 348 : 0;
+    svg.append(
+      createSvgElement("text", { x: 36, y: y - 16, class: "audit-bar-label" }, label),
+      createSvgElement(
+        "text",
+        { x: 384, y: y - 16, "text-anchor": "end", class: "chart-label" },
+        formatAmount(amount)
+      ),
+      createSvgElement("rect", { x: 36, y, width: 348, height: 16, rx: 8, class: "audit-bar-track" }),
+      createSvgElement("rect", { x: 36, y, width: barWidth, height: 16, rx: 8, class: className })
+    );
+  });
 }

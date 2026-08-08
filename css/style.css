@@ -24,7 +24,9 @@ body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
-  background: var(--background);
+  background:
+    radial-gradient(circle at 85% 0%, rgba(15, 39, 71, 0.06), transparent 32rem),
+    var(--background);
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -219,7 +221,9 @@ button:disabled {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
 }
 
 .profile-header h1 {
@@ -262,13 +266,26 @@ button:disabled {
 .summary-card,
 .graph-card {
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 14px;
   background: var(--surface);
-  box-shadow: 0 6px 18px rgba(15, 39, 71, 0.05);
+  box-shadow: 0 8px 24px rgba(15, 39, 71, 0.04);
 }
 
 .summary-card {
-  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  padding: 24px 24px 22px;
+}
+
+.summary-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--primary);
+  content: "";
+  opacity: 0.9;
 }
 
 .summary-card p {
@@ -277,7 +294,8 @@ button:disabled {
 }
 
 .summary-card strong {
-  font-size: 2rem;
+  font-size: clamp(1.75rem, 3vw, 2.15rem);
+  letter-spacing: -0.04em;
 }
 
 .graphs-grid {
@@ -286,7 +304,8 @@ button:disabled {
 
 .graph-card {
   min-width: 0;
-  padding: 24px;
+  overflow: hidden;
+  padding: 28px;
 }
 
 .graph-card svg {
@@ -297,8 +316,9 @@ button:disabled {
   overflow: visible;
 }
 
-.chart-axis {
-  stroke: #c8ced6;
+.chart-grid-line {
+  stroke: rgba(15, 39, 71, 0.11);
+  stroke-dasharray: 3 7;
   stroke-width: 1;
 }
 
@@ -307,17 +327,39 @@ button:disabled {
   stroke: var(--primary);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 3;
+  stroke-width: 3.5;
 }
 
 .chart-area {
-  fill: rgba(15, 39, 71, 0.1);
+  fill: url("#xp-area-gradient");
+}
+
+.chart-gradient-start {
+  stop-color: var(--primary);
+  stop-opacity: 0.2;
+}
+
+.chart-gradient-end {
+  stop-color: var(--primary);
+  stop-opacity: 0.015;
+}
+
+.chart-guide {
+  stroke: rgba(15, 39, 71, 0.2);
+  stroke-dasharray: 2 5;
+  stroke-width: 1;
 }
 
 .chart-point {
-  fill: var(--surface);
+  fill: var(--primary);
   stroke: var(--primary);
   stroke-width: 2;
+}
+
+.chart-point-halo {
+  fill: var(--surface);
+  stroke: rgba(15, 39, 71, 0.16);
+  stroke-width: 1;
 }
 
 .chart-label {
@@ -325,26 +367,33 @@ button:disabled {
   font-size: 12px;
 }
 
-.chart-value {
+.chart-date {
+  font-size: 11px;
+}
+
+.audit-ratio-value {
   fill: var(--text);
-  font-size: 22px;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+}
+
+.audit-bar-label {
+  fill: var(--text);
+  font-size: 13px;
   font-weight: 700;
 }
 
-#audit-chart circle[stroke="#21a179"] {
-  stroke: var(--primary) !important;
+.audit-bar-track {
+  fill: #e8ebee;
 }
 
-#audit-chart circle[fill="#21a179"] {
-  fill: var(--primary) !important;
+.audit-bar-given {
+  fill: var(--primary);
 }
 
-#audit-chart circle[stroke="#e7ebf2"] {
-  stroke: var(--primary-soft) !important;
-}
-
-#audit-chart circle[fill="#dfe5ee"] {
-  fill: #cbd4df !important;
+.audit-bar-received {
+  fill: #9ca9b7;
 }
 
 @media (max-width: 800px) {
