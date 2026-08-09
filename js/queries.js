@@ -8,12 +8,15 @@ export const USER_QUERY = `
   }
 `;
 
-// Query with arguments: only XP transactions, ordered by date.
+// Query with arguments: only non-Piscine XP transactions, ordered by date.
 // It also nests object information inside each transaction.
 export const XP_QUERY = `
   query XpTransactions {
     transaction(
-      where: { type: { _eq: "xp" } }
+      where: {
+        type: { _eq: "xp" }
+        path: { _nlike: "%piscine%" }
+      }
       order_by: { createdAt: asc }
     ) {
       amount
