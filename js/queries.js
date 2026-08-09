@@ -8,7 +8,7 @@ export const USER_QUERY = `
   }
 `;
 
-// Query with arguments: exclude admission Piscines but keep Piscine JS.
+// Query with arguments: exclude admission Piscines but keep the Piscine JS project.
 // This matches the transactions included by Reboot01's Module XP board.
 // It also nests object information inside each transaction.
 export const XP_QUERY = `
@@ -18,7 +18,7 @@ export const XP_QUERY = `
         type: { _eq: "xp" }
         _or: [
           { path: { _nlike: "%piscine%" } }
-          { path: { _like: "%piscine-js%" } }
+          { path: { _eq: "/bahrain/bh-module/piscine-js" } }
         ]
       }
       order_by: { createdAt: asc }
