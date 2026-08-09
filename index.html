@@ -9,7 +9,7 @@
   </head>
   <body>
     <section class="login-page" id="login-view">
-      <form class="login-card" id="login-form">
+      <form class="login-card" id="login-form" method="post">
         <p class="eyebrow">Reboot01</p>
         <h1>Student profile</h1>
         <p class="muted">Sign in to view your learning progress.</p>
@@ -95,6 +95,18 @@
       </section>
     </main>
 
-    <script type="module" src="js/main.js?v=20260809-1"></script>
+    <script>
+      if (window.location.protocol === "file:") {
+        const form = document.querySelector("#login-form");
+        const error = document.querySelector("#login-error");
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          error.textContent = "Run this project through a local server before signing in.";
+          error.hidden = false;
+        });
+      }
+    </script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 import { isLoggedIn, logOut, signIn } from "./auth.js";
-import { loadProfile, renderProfile } from "./profile.js?v=20260809-1";
+import { loadProfile, renderProfile } from "./profile.js";
 
 const loginView = document.querySelector("#login-view");
 const profileView = document.querySelector("#profile-view");
