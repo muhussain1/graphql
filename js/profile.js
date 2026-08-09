@@ -1,5 +1,5 @@
 import { graphqlQuery } from "./api.js";
-import { AUDITS_QUERY, PROGRESS_QUERY, USER_QUERY, XP_QUERY } from "./queries.js";
+import { AUDITS_QUERY, PROGRESS_QUERY, USER_QUERY, XP_QUERY } from "./queries.js?v=20260809-2";
 import { drawAuditRatio } from "./graphs/auditRatio.js";
 import { drawXpOverTime } from "./graphs/xpOverTime.js";
 

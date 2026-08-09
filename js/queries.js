@@ -8,15 +8,18 @@ export const USER_QUERY = `
   }
 `;
 
-// Query with arguments: only XP from the Bahrain module, ordered by date.
-// This excludes the earlier admission Piscine but keeps Piscine JS in the module.
+// Query with arguments: exclude admission Piscines but keep Piscine JS.
+// This matches the transactions included by Reboot01's Module XP board.
 // It also nests object information inside each transaction.
 export const XP_QUERY = `
   query XpTransactions {
     transaction(
       where: {
         type: { _eq: "xp" }
-        path: { _like: "%/bh-module/%" }
+        _or: [
+          { path: { _nlike: "%piscine%" } }
+          { path: { _like: "%piscine-js%" } }
+        ]
       }
       order_by: { createdAt: asc }
     ) {
