@@ -1,11 +1,11 @@
 import { graphqlQuery } from "./api.js";
-import { AUDITS_QUERY, PROGRESS_QUERY, USER_QUERY, XP_QUERY } from "./queries.js?v=20260809-3";
+import { AUDITS_QUERY, PROGRESS_QUERY, USER_QUERY, XP_QUERY } from "./queries.js?v=20260813-1";
 import { drawAuditRatio } from "./graphs/auditRatio.js";
 import { drawXpOverTime } from "./graphs/xpOverTime.js";
 
 function formatXP(value) {
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(2)} MB`;
-  if (value >= 1_000) return `${(value / 1_000).toFixed(1)} kB`;
+  if (value >= 1_000) return `${Math.round(value / 1_000)} kB`;
   return `${Math.round(value)} B`;
 }
 
